@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import {
   Area,
@@ -172,24 +173,26 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           </div>
         </div>
 
-        <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6 overflow-auto max-h-[500px]`}>
+        <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6 overflow-auto`}>
           <h2 className="text-lg font-semibold mb-4">Recent Events</h2>
           <div className="space-y-1">
             {recentEvents.map((event, index) => (
               <div 
                 key={index} 
-                className={`${cardBg} p-2 rounded border-l-2 border-[#11f7b1] flex items-center justify-between`}
+                className="flex items-center gap-2 py-1.5"
               >
+                <User className="h-5 w-5 text-[#11f7b1]" />
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between">
                     <span className={`${textColor} text-xs font-medium truncate`}>
-                      {event.agent} <span className={subTextColor}>{event.action}</span>
+                      {event.agent}
                     </span>
-                    <span className={`${subTextColor} text-xs`}>{event.timestamp}</span>
+                    <span className="text-[#11f7b1] text-xs">{event.price}</span>
                   </div>
-                  <div className="flex items-center justify-between mt-0.5">
-                    <span className={`${textColor} text-xs truncate max-w-[140px]`}>{event.property}</span>
-                    <span className="text-[#11f7b1] text-xs font-medium">{event.price}</span>
+                  <div className="flex items-center gap-1 text-xs">
+                    <span className={subTextColor}>{event.action}</span>
+                    <span className={subTextColor}>•</span>
+                    <span className={subTextColor}>{event.timestamp}</span>
                   </div>
                 </div>
               </div>
