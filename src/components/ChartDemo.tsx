@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   Area,
@@ -12,7 +11,7 @@ import {
   YAxis
 } from 'recharts';
 import { StarBorder } from './ui/star-border';
-import { StarIcon, Home, Key, Calendar, User } from 'lucide-react';
+import { StarIcon, User } from 'lucide-react';
 
 const data = [
   { date: 'Feb 12', price: 0.001, sales: 60, rentals: 40, mindshare: 0.12 },
@@ -69,34 +68,33 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       action: "Sold",
       property: "Oceanview Mansion",
       price: "$2.4M",
-      timestamp: "2 hours ago"
+      timestamp: "2h"
     },
     {
       agent: "Michael Rodriguez",
       action: "Listed",
       property: "Downtown Penthouse",
       price: "$1.8M",
-      timestamp: "4 hours ago"
+      timestamp: "4h"
     },
     {
       agent: "Emily Wong",
-      action: "Closed deal",
+      action: "Closed",
       property: "Suburban Villa",
       price: "$950K",
-      timestamp: "Yesterday"
+      timestamp: "1d"
     },
     {
       agent: "David Kim",
-      action: "Started showing",
+      action: "Showing",
       property: "Lake House Estate",
       price: "$3.2M",
-      timestamp: "Yesterday"
+      timestamp: "1d"
     }
   ];
 
   return (
     <div className="container mx-auto p-6">
-      {/* Top cards section */}
       <div className={`grid grid-cols-3 gap-6 mb-6 ${textColor}`}>
         {cards.map((card, index) => (
           <div key={index} className={`${bgColor} rounded-xl border ${borderColor} p-6 relative`}>
@@ -176,29 +174,23 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
 
         <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6 overflow-auto max-h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Recent Events</h2>
-          <div className="space-y-2">
+          <div className="space-y-1">
             {recentEvents.map((event, index) => (
               <div 
                 key={index} 
-                className={`${cardBg} p-3 rounded-lg transition-all hover:scale-[1.02] border-l-4 border-[#11f7b1]`}
+                className={`${cardBg} p-2 rounded border-l-2 border-[#11f7b1] flex items-center justify-between`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center gap-1.5">
-                    <User className="h-3.5 w-3.5 text-[#11f7b1]" />
-                    <span className={`${textColor} text-sm font-medium`}>{event.agent}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className={`${textColor} text-xs font-medium truncate`}>
+                      {event.agent} <span className={subTextColor}>{event.action}</span>
+                    </span>
+                    <span className={`${subTextColor} text-xs`}>{event.timestamp}</span>
                   </div>
-                  <span className={`${subTextColor} text-xs`}>{event.timestamp}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <Home className="h-3.5 w-3.5 text-[#11f7b1]" />
-                    <span className={`${textColor} text-sm truncate max-w-[120px]`}>{event.property}</span>
+                  <div className="flex items-center justify-between mt-0.5">
+                    <span className={`${textColor} text-xs truncate max-w-[140px]`}>{event.property}</span>
+                    <span className="text-[#11f7b1] text-xs font-medium">{event.price}</span>
                   </div>
-                  <span className="text-[#11f7b1] text-sm font-semibold">{event.price}</span>
-                </div>
-                <div className="mt-1 flex items-center gap-1">
-                  <Key className="h-3 w-3 text-[#11f7b1]" />
-                  <span className={`${subTextColor} text-xs`}>{event.action}</span>
                 </div>
               </div>
             ))}
