@@ -1,13 +1,4 @@
-
 import { useState } from 'react';
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from 'recharts';
 import { StarBorder } from './ui/star-border';
 import { StarIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
@@ -34,6 +25,16 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
   const borderColor = isDarkMode ? 'border-gray-800' : 'border-gray-200';
   const textColor = isDarkMode ? 'text-white' : 'text-gray-900';
   const subTextColor = isDarkMode ? 'text-gray-400' : 'text-gray-500';
+
+  const maxValue = Math.max(...data.map(d => Math.max(d.sales, d.rentals)));
+  const pixelSize = 6; // Size of each pixel square
+  const pixelGap = 2; // Gap between pixels
+  const pixelsPerColumn = 20; // Number of pixels in each column
+  const valuePerPixel = maxValue / pixelsPerColumn;
+
+  const getPixelsForValue = (value: number) => {
+    return Math.round(value / valuePerPixel);
+  };
 
   const togglePin = (index: number) => {
     setPinnedCards(prev => 
@@ -139,41 +140,38 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       <div className={`grid grid-cols-7 gap-6 ${textColor}`}>
         <div className={`col-span-5 ${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
-          <div className="h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} barGap={0}>
-                <XAxis 
-                  dataKey="date" 
-                  stroke={isDarkMode ? '#666' : '#888'}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis 
-                  stroke={isDarkMode ? '#666' : '#888'}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: isDarkMode ? '#1a1a1a' : '#fff',
-                    border: `1px solid ${isDarkMode ? '#333' : '#e5e7eb'}`,
-                    borderRadius: '8px'
-                  }} 
-                />
-                <Bar
-                  dataKey="sales"
-                  fill="#11f7b1"
-                  radius={[4, 4, 0, 0]}
-                  maxBarSize={32}
-                />
-                <Bar
-                  dataKey="rentals"
-                  fill="#11f7b180"
-                  radius={[4, 4, 0, 0]}
-                  maxBarSize={32}
-                />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="h-[400px] relative flex items-end gap-4 pt-8">
+            {data.map((item, index) => (
+              <div key={index} className="flex-1 flex gap-1 justify-center">
+                <div className="flex flex-col-reverse gap-[2px]">
+                  {Array.from({ length: getPixelsForValue(item.sales) }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-[6px] h-[6px] bg-[#11f7b1]"
+                    />
+                  ))}
+                </div>
+                <div className="flex flex-col-reverse gap-[2px]">
+                  {Array.from({ length: getPixelsForValue(item.rentals) }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-[6px] h-[6px] bg-[#11f7b180]"
+                    />
+                  ))}
+                </div>
+                <div className="absolute -bottom-6 text-xs text-center w-full">
+                  {item.date}
+                </div>
+              </div>
+            ))}
+            {/* Y-axis labels */}
+            <div className="absolute left-0 top-0 h-full flex flex-col justify-between">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="text-xs text-gray-500">
+                  {Math.round((maxValue * (4 - i)) / 4)}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
