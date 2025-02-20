@@ -13,13 +13,13 @@ import {
 } from 'recharts';
 
 const data = [
-  { date: 'Feb 12', price: 0.001, volume: 100, mindshare: 0.12 },
-  { date: 'Feb 13', price: 0.0015, volume: 150, mindshare: 0.15 },
-  { date: 'Feb 14', price: 0.001, volume: 120, mindshare: 0.11 },
-  { date: 'Feb 15', price: 0.002, volume: 200, mindshare: 0.18 },
-  { date: 'Feb 16', price: 0.006, volume: 400, mindshare: 0.25 },
-  { date: 'Feb 17', price: 0.004, volume: 300, mindshare: 0.22 },
-  { date: 'Feb 18', price: 0.003, volume: 250, mindshare: 0.20 }
+  { date: 'Feb 12', price: 0.001, sales: 60, rentals: 40, mindshare: 0.12 },
+  { date: 'Feb 13', price: 0.0015, sales: 90, rentals: 60, mindshare: 0.15 },
+  { date: 'Feb 14', price: 0.001, sales: 70, rentals: 50, mindshare: 0.11 },
+  { date: 'Feb 15', price: 0.002, sales: 120, rentals: 80, mindshare: 0.18 },
+  { date: 'Feb 16', price: 0.006, sales: 250, rentals: 150, mindshare: 0.25 },
+  { date: 'Feb 17', price: 0.004, sales: 180, rentals: 120, mindshare: 0.22 },
+  { date: 'Feb 18', price: 0.003, sales: 150, rentals: 100, mindshare: 0.20 }
 ];
 
 interface TooltipProps {
@@ -27,10 +27,7 @@ interface TooltipProps {
   payload?: Array<{
     value: number;
     dataKey: string;
-    payload: {
-      price: number;
-      mindshare: number;
-    };
+    color: string;
   }>;
 }
 
@@ -38,8 +35,19 @@ const CustomTooltip = ({ active, payload }: TooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-        <p className="text-[#11f7b1]">{`Price: $${payload[0].value.toFixed(4)}`}</p>
-        <p className="text-[#11f7b1]">{`Mindshare: ${(payload[1].value * 100).toFixed(2)}%`}</p>
+        {payload.map((entry, index) => (
+          <p 
+            key={index} 
+            style={{ color: entry.color }}
+          >
+            {`${entry.dataKey === 'sales' ? 'Sales' : 
+               entry.dataKey === 'rentals' ? 'Rentals' : 
+               entry.dataKey === 'price' ? 'Price: $' : 
+               'Mindshare: '}${entry.dataKey === 'mindshare' ? 
+               (entry.value * 100).toFixed(2) + '%' : 
+               entry.value.toFixed(entry.dataKey === 'price' ? 4 : 0)}`}
+          </p>
+        ))}
       </div>
     );
   }
@@ -87,9 +95,13 @@ export default function ChartDemo() {
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={data}>
               <defs>
-                <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#11f7b1" stopOpacity={0.1} />
+                <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#11f7b1" stopOpacity={0.2} />
                   <stop offset="95%" stopColor="#11f7b1" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorRentals" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#845EF7" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#845EF7" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis 
@@ -112,10 +124,20 @@ export default function ChartDemo() {
               />
               <Tooltip content={<CustomTooltip />} />
               <Bar
-                dataKey="volume"
-                fill="url(#colorVolume)"
+                dataKey="sales"
+                fill="url(#colorSales)"
                 yAxisId="left"
-                barSize={30}
+                barSize={20}
+                strokeWidth={2}
+                stroke="#11f7b1"
+              />
+              <Bar
+                dataKey="rentals"
+                fill="url(#colorRentals)"
+                yAxisId="left"
+                barSize={20}
+                strokeWidth={2}
+                stroke="#845EF7"
               />
               <Line
                 type="monotone"
@@ -124,10 +146,8 @@ export default function ChartDemo() {
                 strokeWidth={2}
                 dot={{ fill: '#11f7b1', r: 4 }}
                 yAxisId="left"
-                onMouseMove={(data) => {
-                  if (data && data.payload) {
-                    setHoveredPrice(data.payload.price);
-                  }
+                onMouseEnter={(_, index) => {
+                  setHoveredPrice(data[index].price);
                 }}
                 onMouseLeave={() => setHoveredPrice(null)}
               />
