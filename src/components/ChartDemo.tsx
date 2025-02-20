@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   Area,
@@ -12,7 +11,8 @@ import {
   YAxis
 } from 'recharts';
 import { StarBorder } from './ui/star-border';
-import { StarIcon, User } from 'lucide-react';
+import { StarIcon } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const data = [
   { date: 'Feb 12', price: 0.001, sales: 60, rentals: 40, mindshare: 0.12 },
@@ -69,28 +69,32 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       action: "SOLD",
       property: "Oceanview Mansion",
       price: "$2.4M",
-      timestamp: "2h"
+      timestamp: "2h",
+      avatar: "/avatar-chen.jpg"
     },
     {
       agent: "Michael Rodriguez",
       action: "RENT",
       property: "Downtown Penthouse",
       price: "$8.5K/mo",
-      timestamp: "4h"
+      timestamp: "4h",
+      avatar: "/avatar-rodriguez.jpg"
     },
     {
       agent: "Emily Wong",
       action: "SOLD",
       property: "Suburban Villa",
       price: "$950K",
-      timestamp: "1d"
+      timestamp: "1d",
+      avatar: "/avatar-wong.jpg"
     },
     {
       agent: "David Kim",
       action: "RENT",
       property: "Lake House Estate",
       price: "$12K/mo",
-      timestamp: "1d"
+      timestamp: "1d",
+      avatar: "/avatar-kim.jpg"
     }
   ];
 
@@ -181,7 +185,12 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
                 key={index} 
                 className="flex items-center gap-2 py-1.5"
               >
-                <User className="h-5 w-5 text-[#11f7b1]" />
+                <Avatar className="h-5 w-5">
+                  <AvatarImage src={event.avatar} alt={event.agent} />
+                  <AvatarFallback>
+                    {event.agent.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
+                </Avatar>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <span className={`${textColor} text-xs font-medium truncate`}>
