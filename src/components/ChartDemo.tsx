@@ -176,27 +176,29 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
 
         <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6 overflow-auto max-h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Recent Events</h2>
-          <div className="space-y-4">
+          <div className="space-y-2">
             {recentEvents.map((event, index) => (
               <div 
                 key={index} 
-                className={`${cardBg} p-4 rounded-lg transition-all hover:scale-[1.02]`}
+                className={`${cardBg} p-3 rounded-lg transition-all hover:scale-[1.02] border-l-4 border-[#11f7b1]`}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <User className="h-4 w-4 text-[#11f7b1]" />
-                  <h3 className={`${textColor} font-medium`}>{event.agent}</h3>
-                </div>
-                <div className="flex items-center gap-2 mb-1">
-                  <Home className="h-4 w-4 text-[#11f7b1]" />
-                  <p className={textColor}>{event.property}</p>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-1.5">
+                    <User className="h-3.5 w-3.5 text-[#11f7b1]" />
+                    <span className={`${textColor} text-sm font-medium`}>{event.agent}</span>
+                  </div>
+                  <span className={`${subTextColor} text-xs`}>{event.timestamp}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="text-[#11f7b1] font-semibold">{event.price}</p>
-                  <span className={`${subTextColor} text-sm`}>{event.timestamp}</span>
+                  <div className="flex items-center gap-1.5">
+                    <Home className="h-3.5 w-3.5 text-[#11f7b1]" />
+                    <span className={`${textColor} text-sm truncate max-w-[120px]`}>{event.property}</span>
+                  </div>
+                  <span className="text-[#11f7b1] text-sm font-semibold">{event.price}</span>
                 </div>
-                <div className="mt-2 flex items-center gap-1">
+                <div className="mt-1 flex items-center gap-1">
                   <Key className="h-3 w-3 text-[#11f7b1]" />
-                  <span className={`${subTextColor} text-sm`}>{event.action}</span>
+                  <span className={`${subTextColor} text-xs`}>{event.action}</span>
                 </div>
               </div>
             ))}
