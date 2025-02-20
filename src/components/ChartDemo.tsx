@@ -66,30 +66,30 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
   const recentEvents = [
     {
       agent: "Sarah Chen",
-      action: "Sold",
+      action: "SOLD",
       property: "Oceanview Mansion",
       price: "$2.4M",
       timestamp: "2h"
     },
     {
       agent: "Michael Rodriguez",
-      action: "Listed",
+      action: "RENT",
       property: "Downtown Penthouse",
-      price: "$1.8M",
+      price: "$8.5K/mo",
       timestamp: "4h"
     },
     {
       agent: "Emily Wong",
-      action: "Closed",
+      action: "SOLD",
       property: "Suburban Villa",
       price: "$950K",
       timestamp: "1d"
     },
     {
       agent: "David Kim",
-      action: "Showing",
+      action: "RENT",
       property: "Lake House Estate",
-      price: "$3.2M",
+      price: "$12K/mo",
       timestamp: "1d"
     }
   ];
@@ -190,7 +190,9 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
                     <span className="text-[#11f7b1] text-xs">{event.price}</span>
                   </div>
                   <div className="flex items-center gap-1 text-xs">
-                    <span className={subTextColor}>{event.action}</span>
+                    <span className={`${event.action === 'SOLD' ? 'text-[#11f7b1]' : 'text-blue-400'}`}>
+                      {event.action}
+                    </span>
                     <span className={subTextColor}>•</span>
                     <span className={subTextColor}>{event.timestamp}</span>
                   </div>
