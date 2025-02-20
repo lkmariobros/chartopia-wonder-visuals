@@ -22,7 +22,19 @@ const data = [
   { date: 'Feb 18', price: 0.003, volume: 250, mindshare: 0.20 }
 ];
 
-const CustomTooltip = ({ active, payload }: any) => {
+interface TooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    value: number;
+    dataKey: string;
+    payload: {
+      price: number;
+      mindshare: number;
+    };
+  }>;
+}
+
+const CustomTooltip = ({ active, payload }: TooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
@@ -112,9 +124,9 @@ export default function ChartDemo() {
                 strokeWidth={2}
                 dot={{ fill: '#11f7b1', r: 4 }}
                 yAxisId="left"
-                onMouseMove={(props) => {
-                  if (props && props.payload) {
-                    setHoveredPrice(props.payload.price);
+                onMouseMove={(data) => {
+                  if (data && data.payload) {
+                    setHoveredPrice(data.payload.price);
                   }
                 }}
                 onMouseLeave={() => setHoveredPrice(null)}
