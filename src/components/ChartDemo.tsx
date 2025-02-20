@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   Area,
@@ -11,6 +10,8 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import { StarBorder } from './ui/star-border';
+import { StarIcon } from 'lucide-react';
 
 const data = [
   { date: 'Feb 12', price: 0.001, sales: 60, rentals: 40, mindshare: 0.12 },
@@ -28,16 +29,80 @@ interface ChartDemoProps {
 
 export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
   const [hoveredPrice, setHoveredPrice] = useState<number | null>(null);
+  const [pinnedCards, setPinnedCards] = useState<number[]>([]);
   const bgColor = isDarkMode ? 'bg-[#121212]' : 'bg-white';
   const cardBg = isDarkMode ? 'bg-[#1a1a1a]' : 'bg-gray-50';
   const borderColor = isDarkMode ? 'border-gray-800' : 'border-gray-200';
   const textColor = isDarkMode ? 'text-white' : 'text-gray-900';
   const subTextColor = isDarkMode ? 'text-gray-400' : 'text-gray-500';
 
+  const togglePin = (index: number) => {
+    setPinnedCards(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    );
+  };
+
+  const cards = [
+    {
+      title: "Average Deal Size",
+      value: "$485K",
+      change: "+12.3% vs last month"
+    },
+    {
+      title: "Conversion Rate",
+      value: "75%",
+      change: "+5% vs last month"
+    },
+    {
+      title: "Client Satisfaction",
+      value: "4.7",
+      ratings: [4.8, 4.2, 4.5, 4.9, 4.7]
+    }
+  ];
+
   return (
     <div className="container mx-auto p-6">
+      <div className={`grid grid-cols-3 gap-6 mb-6 ${textColor}`}>
+        {cards.map((card, index) => (
+          <div key={index} className={`${bgColor} rounded-xl border ${borderColor} p-6 relative`}>
+            <StarBorder
+              className="absolute top-2 right-2 p-0"
+              onClick={() => togglePin(index)}
+            >
+              <StarIcon 
+                className={`h-5 w-5 ${pinnedCards.includes(index) ? 'text-[#11f7b1]' : 'text-gray-400'}`} 
+              />
+            </StarBorder>
+            <h3 className="font-semibold mb-2">{card.title}</h3>
+            {card.title === "Client Satisfaction" ? (
+              <div className="flex items-center gap-4">
+                <div className="space-y-1 flex-1">
+                  {card.ratings?.map((rating, i) => (
+                    <div key={i} className="h-1 bg-[#11f7b1] rounded" style={{ width: `${rating * 20}%` }} />
+                  ))}
+                </div>
+                <p className="text-2xl font-bold">{card.value}</p>
+              </div>
+            ) : card.title === "Conversion Rate" ? (
+              <div className="flex items-center gap-2">
+                <div className="h-12 w-12 rounded-full border-4 border-[#11f7b1] flex items-center justify-center">
+                  <span className="text-lg font-bold">{card.value}</span>
+                </div>
+                <p className="text-[#11f7b1] text-sm">{card.change}</p>
+              </div>
+            ) : (
+              <>
+                <p className="text-2xl font-bold">{card.value}</p>
+                <p className="text-[#11f7b1] text-sm">{card.change}</p>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+
       <div className={`grid grid-cols-3 gap-6 ${textColor}`}>
-        {/* Main Chart Area */}
         <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6`}>
           <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
           <div className="h-[400px]">
@@ -76,7 +141,6 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           </div>
         </div>
 
-        {/* Right Sidebar */}
         <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
           <h2 className="text-lg font-semibold mb-4">Details</h2>
           <div className="space-y-4">
@@ -96,7 +160,6 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           </div>
         </div>
 
-        {/* Bottom Cards */}
         <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
           <h3 className="font-semibold mb-2">Average Deal Size</h3>
           <p className="text-2xl font-bold">$485K</p>
