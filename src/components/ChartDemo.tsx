@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   Area,
@@ -12,7 +11,7 @@ import {
   YAxis
 } from 'recharts';
 import { StarBorder } from './ui/star-border';
-import { StarIcon } from 'lucide-react';
+import { StarIcon, Home, Key, Calendar, User } from 'lucide-react';
 
 const data = [
   { date: 'Feb 12', price: 0.001, sales: 60, rentals: 40, mindshare: 0.12 },
@@ -60,6 +59,37 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       title: "Client Satisfaction",
       value: "4.7",
       ratings: [4.8, 4.2, 4.5, 4.9, 4.7]
+    }
+  ];
+
+  const recentEvents = [
+    {
+      agent: "Sarah Chen",
+      action: "Sold",
+      property: "Oceanview Mansion",
+      price: "$2.4M",
+      timestamp: "2 hours ago"
+    },
+    {
+      agent: "Michael Rodriguez",
+      action: "Listed",
+      property: "Downtown Penthouse",
+      price: "$1.8M",
+      timestamp: "4 hours ago"
+    },
+    {
+      agent: "Emily Wong",
+      action: "Closed deal",
+      property: "Suburban Villa",
+      price: "$950K",
+      timestamp: "Yesterday"
+    },
+    {
+      agent: "David Kim",
+      action: "Started showing",
+      property: "Lake House Estate",
+      price: "$3.2M",
+      timestamp: "Yesterday"
     }
   ];
 
@@ -143,21 +173,31 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
         </div>
 
         <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
-          <h2 className="text-lg font-semibold mb-4">Details</h2>
+          <h2 className="text-lg font-semibold mb-4">Recent Events</h2>
           <div className="space-y-4">
-            <div className={`${cardBg} p-4 rounded-lg`}>
-              <h3 className={subTextColor}>Total Revenue</h3>
-              <p className="text-2xl font-bold">$45,231.89</p>
-              <p className="text-[#11f7b1] text-sm">+20.1% from last month</p>
-            </div>
-            <div className={`${cardBg} p-4 rounded-lg`}>
-              <h3 className={subTextColor}>Active Listings</h3>
-              <p className="text-2xl font-bold">24</p>
-            </div>
-            <div className={`${cardBg} p-4 rounded-lg`}>
-              <h3 className={subTextColor}>Pending Deals</h3>
-              <p className="text-2xl font-bold">7</p>
-            </div>
+            {recentEvents.map((event, index) => (
+              <div 
+                key={index} 
+                className={`${cardBg} p-4 rounded-lg transition-all hover:scale-[1.02]`}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <User className="h-4 w-4 text-[#11f7b1]" />
+                  <h3 className={`${textColor} font-medium`}>{event.agent}</h3>
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Home className="h-4 w-4 text-[#11f7b1]" />
+                  <p className={textColor}>{event.property}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-[#11f7b1] font-semibold">{event.price}</p>
+                  <span className={`${subTextColor} text-sm`}>{event.timestamp}</span>
+                </div>
+                <div className="mt-2 flex items-center gap-1">
+                  <Key className="h-3 w-3 text-[#11f7b1]" />
+                  <span className={`${subTextColor} text-sm`}>{event.action}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
