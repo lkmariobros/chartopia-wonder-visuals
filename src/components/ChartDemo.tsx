@@ -36,11 +36,41 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 export default function ChartDemo() {
   const [hoveredPrice, setHoveredPrice] = useState<number | null>(null);
+  const latestData = data[data.length - 1];
+  const priceChange = ((latestData.price - data[0].price) / data[0].price * 100).toFixed(2);
+  const mindshareChange = ((latestData.mindshare - data[0].mindshare) / data[0].mindshare * 100).toFixed(2);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 bg-[#121212] rounded-xl">
+    <div className="w-full max-w-6xl mx-auto p-6 bg-[#121212] rounded-xl">
+      <div className="grid grid-cols-4 gap-4 mb-8 text-white">
+        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
+          <div className="flex items-baseline gap-2">
+            <h3 className="text-sm text-gray-400">Market cap</h3>
+            <span className="text-xs text-gray-600">#633</span>
+          </div>
+          <p className="text-2xl font-bold">1.85M</p>
+          <p className="text-sm text-[#11f7b1]">+1,557.3% 7D</p>
+        </div>
+        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
+          <h3 className="text-sm text-gray-400">Holders</h3>
+          <p className="text-2xl font-bold">1.48K</p>
+          <p className="text-sm text-[#11f7b1]">+242.1% 7D</p>
+        </div>
+        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
+          <h3 className="text-sm text-gray-400">Mindshare</h3>
+          <p className="text-2xl font-bold">{(latestData.mindshare * 100).toFixed(2)}%</p>
+          <p className="text-sm text-[#11f7b1]">+{mindshareChange}% 7D</p>
+        </div>
+        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
+          <h3 className="text-sm text-gray-400">Price</h3>
+          <p className="text-2xl font-bold">
+            ${hoveredPrice?.toFixed(4) || latestData.price.toFixed(4)}
+          </p>
+          <p className="text-sm text-[#11f7b1]">+{priceChange}% 7D</p>
+        </div>
+      </div>
+
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2">Price & Mindshare</h2>
         <div className="h-[400px]">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={data}>
@@ -82,7 +112,11 @@ export default function ChartDemo() {
                 strokeWidth={2}
                 dot={{ fill: '#11f7b1', r: 4 }}
                 yAxisId="left"
-                onMouseEnter={(data) => setHoveredPrice(data.value)}
+                onMouseMove={(props) => {
+                  if (props && props.payload) {
+                    setHoveredPrice(props.payload.price);
+                  }
+                }}
                 onMouseLeave={() => setHoveredPrice(null)}
               />
               <Line
@@ -98,24 +132,16 @@ export default function ChartDemo() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 text-white">
+      <div className="grid grid-cols-2 gap-4 text-white">
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <p className="text-sm text-gray-400">Current Price</p>
-          <p className="text-2xl font-bold text-[#11f7b1]">
-            ${hoveredPrice?.toFixed(4) || data[data.length - 1].price.toFixed(4)}
-          </p>
+          <h3 className="text-sm text-gray-400">Engagement (Avg.)</h3>
+          <p className="text-2xl font-bold">22.88</p>
+          <p className="text-sm text-[#11f7b1]">+83.5% 7D</p>
         </div>
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <p className="text-sm text-gray-400">Volume</p>
-          <p className="text-2xl font-bold text-[#11f7b1]">
-            {data[data.length - 1].volume}
-          </p>
-        </div>
-        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <p className="text-sm text-gray-400">Mindshare</p>
-          <p className="text-2xl font-bold text-[#11f7b1]">
-            {(data[data.length - 1].mindshare * 100).toFixed(2)}%
-          </p>
+          <h3 className="text-sm text-gray-400">Impressions (Avg.)</h3>
+          <p className="text-2xl font-bold">1.34K</p>
+          <p className="text-sm text-[#11f7b1]">+79% 7D</p>
         </div>
       </div>
     </div>
