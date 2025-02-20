@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import {
   Area,
@@ -95,6 +96,7 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
 
   return (
     <div className="container mx-auto p-6">
+      {/* Top cards section */}
       <div className={`grid grid-cols-3 gap-6 mb-6 ${textColor}`}>
         {cards.map((card, index) => (
           <div key={index} className={`${bgColor} rounded-xl border ${borderColor} p-6 relative`}>
@@ -133,8 +135,8 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
         ))}
       </div>
 
-      <div className={`grid grid-cols-3 gap-6 ${textColor}`}>
-        <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6`}>
+      <div className={`grid grid-cols-7 gap-6 ${textColor}`}>
+        <div className={`col-span-5 ${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -172,7 +174,7 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           </div>
         </div>
 
-        <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
+        <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6 overflow-auto max-h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Recent Events</h2>
           <div className="space-y-4">
             {recentEvents.map((event, index) => (
