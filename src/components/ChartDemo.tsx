@@ -1,10 +1,8 @@
+
 import { useState } from 'react';
 import {
-  Area,
-  AreaChart,
   Bar,
-  ComposedChart,
-  Line,
+  BarChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -15,13 +13,13 @@ import { StarIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const data = [
-  { date: 'Feb 12', price: 0.001, sales: 60, rentals: 40, mindshare: 0.12 },
-  { date: 'Feb 13', price: 0.0015, sales: 90, rentals: 60, mindshare: 0.15 },
-  { date: 'Feb 14', price: 0.001, sales: 70, rentals: 50, mindshare: 0.11 },
-  { date: 'Feb 15', price: 0.002, sales: 120, rentals: 80, mindshare: 0.18 },
-  { date: 'Feb 16', price: 0.006, sales: 250, rentals: 150, mindshare: 0.25 },
-  { date: 'Feb 17', price: 0.004, sales: 180, rentals: 120, mindshare: 0.22 },
-  { date: 'Feb 18', price: 0.003, sales: 150, rentals: 100, mindshare: 0.20 }
+  { date: 'Feb 12', sales: 60, rentals: 40, mindshare: 0.12 },
+  { date: 'Feb 13', sales: 90, rentals: 60, mindshare: 0.15 },
+  { date: 'Feb 14', sales: 70, rentals: 50, mindshare: 0.11 },
+  { date: 'Feb 15', sales: 120, rentals: 80, mindshare: 0.18 },
+  { date: 'Feb 16', sales: 250, rentals: 150, mindshare: 0.25 },
+  { date: 'Feb 17', sales: 180, rentals: 120, mindshare: 0.22 },
+  { date: 'Feb 18', sales: 150, rentals: 100, mindshare: 0.20 }
 ];
 
 interface ChartDemoProps {
@@ -143,15 +141,18 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={data}>
-                <defs>
-                  <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#11f7b1" stopOpacity={0.2} />
-                    <stop offset="95%" stopColor="#11f7b1" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="date" stroke={isDarkMode ? '#666' : '#888'} />
-                <YAxis stroke={isDarkMode ? '#666' : '#888'} />
+              <BarChart data={data} barGap={0}>
+                <XAxis 
+                  dataKey="date" 
+                  stroke={isDarkMode ? '#666' : '#888'}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis 
+                  stroke={isDarkMode ? '#666' : '#888'}
+                  axisLine={false}
+                  tickLine={false}
+                />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: isDarkMode ? '#1a1a1a' : '#fff',
@@ -159,20 +160,19 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
                     borderRadius: '8px'
                   }} 
                 />
-                <Area
-                  type="monotone"
+                <Bar
                   dataKey="sales"
-                  stroke="#11f7b1"
-                  fillOpacity={1}
-                  fill="url(#colorSales)"
+                  fill="#11f7b1"
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={32}
                 />
-                <Line
-                  type="monotone"
-                  dataKey="price"
-                  stroke="#11f7b1"
-                  dot={{ fill: '#11f7b1', r: 4 }}
+                <Bar
+                  dataKey="rentals"
+                  fill="#11f7b180"
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={32}
                 />
-              </ComposedChart>
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
