@@ -1,7 +1,9 @@
+
 import { useState } from 'react';
 import { StarBorder } from './ui/star-border';
 import { StarIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 
 const data = [
   { date: 'Feb 12', sales: 60, rentals: 40, mindshare: 0.12 },
@@ -140,37 +142,55 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       <div className={`grid grid-cols-7 gap-6 ${textColor}`}>
         <div className={`col-span-5 ${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
-          <div className="h-[400px] relative flex items-end gap-4 pt-8">
-            {data.map((item, index) => (
-              <div key={index} className="flex-1 flex gap-1 justify-center">
-                <div className="flex flex-col-reverse gap-[2px]">
-                  {Array.from({ length: getPixelsForValue(item.sales) }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-[6px] h-[6px] bg-[#11f7b1]"
-                    />
-                  ))}
-                </div>
-                <div className="flex flex-col-reverse gap-[2px]">
-                  {Array.from({ length: getPixelsForValue(item.rentals) }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-[6px] h-[6px] bg-[#11f7b180]"
-                    />
-                  ))}
-                </div>
-                <div className="absolute -bottom-6 text-xs text-center w-full">
-                  {item.date}
-                </div>
-              </div>
-            ))}
-            {/* Y-axis labels */}
-            <div className="absolute left-0 top-0 h-full flex flex-col justify-between">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="text-xs text-gray-500">
-                  {Math.round((maxValue * (4 - i)) / 4)}
+          <div className="h-[400px] relative">
+            {/* Line Chart for Mindshare */}
+            <div className="absolute inset-0 z-10">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={data}>
+                  <Area
+                    type="monotone"
+                    dataKey="mindshare"
+                    stroke="#11f7b1"
+                    fill="#11f7b120"
+                    strokeWidth={2}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Pixel Bars */}
+            <div className="absolute inset-0 flex items-end gap-4 pt-8">
+              {data.map((item, index) => (
+                <div key={index} className="flex-1 flex gap-1 justify-center">
+                  <div className="flex flex-col-reverse gap-[2px]">
+                    {Array.from({ length: getPixelsForValue(item.sales) }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-[6px] h-[6px] bg-[#11f7b1]"
+                      />
+                    ))}
+                  </div>
+                  <div className="flex flex-col-reverse gap-[2px]">
+                    {Array.from({ length: getPixelsForValue(item.rentals) }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-[6px] h-[6px] bg-[#11f7b180]"
+                      />
+                    ))}
+                  </div>
+                  <div className="absolute -bottom-6 text-xs text-center w-full">
+                    {item.date}
+                  </div>
                 </div>
               ))}
+              {/* Y-axis labels */}
+              <div className="absolute left-0 top-0 h-full flex flex-col justify-between">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="text-xs text-gray-500">
+                    {Math.round((maxValue * (4 - i)) / 4)}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
