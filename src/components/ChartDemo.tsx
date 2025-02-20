@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import {
   Area,
@@ -157,34 +158,6 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
               <h3 className={subTextColor}>Pending Deals</h3>
               <p className="text-2xl font-bold">7</p>
             </div>
-          </div>
-        </div>
-
-        <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
-          <h3 className="font-semibold mb-2">Average Deal Size</h3>
-          <p className="text-2xl font-bold">$485K</p>
-          <p className="text-[#11f7b1] text-sm">+12.3% vs last month</p>
-        </div>
-
-        <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
-          <h3 className="font-semibold mb-2">Conversion Rate</h3>
-          <div className="flex items-center gap-2">
-            <div className="h-12 w-12 rounded-full border-4 border-[#11f7b1] flex items-center justify-center">
-              <span className="text-lg font-bold">75%</span>
-            </div>
-            <p className="text-[#11f7b1] text-sm">+5% vs last month</p>
-          </div>
-        </div>
-
-        <div className={`${bgColor} rounded-xl border ${borderColor} p-6`}>
-          <h3 className="font-semibold mb-2">Client Satisfaction</h3>
-          <div className="flex items-center gap-4">
-            <div className="space-y-1 flex-1">
-              {[4.8, 4.2, 4.5, 4.9, 4.7].map((rating, i) => (
-                <div key={i} className="h-1 bg-[#11f7b1] rounded" style={{ width: `${rating * 20}%` }} />
-              ))}
-            </div>
-            <p className="text-2xl font-bold">4.7</p>
           </div>
         </div>
       </div>
