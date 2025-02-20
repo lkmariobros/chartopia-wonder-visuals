@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   Area,
@@ -64,12 +63,26 @@ export default function ChartDemo() {
     <div className="w-full max-w-6xl mx-auto p-6 bg-[#121212] rounded-xl">
       <div className="grid grid-cols-4 gap-4 mb-8 text-white">
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <div className="flex items-baseline gap-2">
-            <h3 className="text-sm text-gray-400">Market cap</h3>
-            <span className="text-xs text-gray-600">#633</span>
+          <div className="flex items-baseline justify-between">
+            <div>
+              <h3 className="text-sm text-gray-400">Avg. Deal Size</h3>
+              <p className="text-2xl font-bold">$485K</p>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-sm text-[#11f7b1]">+12.3% </span>
+                <span className="text-xs text-gray-400">vs last month</span>
+              </div>
+            </div>
+            <div className="flex flex-col items-end">
+              <div className="flex gap-2 items-center">
+                <span className="text-xs text-gray-400">Sales</span>
+                <span className="text-sm font-semibold text-[#11f7b1]">$520K</span>
+              </div>
+              <div className="flex gap-2 items-center mt-1">
+                <span className="text-xs text-gray-400">Rentals</span>
+                <span className="text-sm font-semibold text-[#845EF7]">$2.8K</span>
+              </div>
+            </div>
           </div>
-          <p className="text-2xl font-bold">1.85M</p>
-          <p className="text-sm text-[#11f7b1]">+1,557.3% 7D</p>
         </div>
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
           <h3 className="text-sm text-gray-400">Holders</h3>
