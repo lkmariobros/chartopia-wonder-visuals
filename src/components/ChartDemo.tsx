@@ -63,27 +63,12 @@ export default function ChartDemo() {
     <div className="w-full max-w-6xl mx-auto p-6 bg-[#121212] rounded-xl">
       <div className="grid grid-cols-4 gap-4 mb-8 text-white">
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <h3 className="text-sm text-gray-400 mb-3">Average Deal Size</h3>
-          <div className="space-y-3">
-            <div className="relative">
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-[#11f7b1]">$520K</span>
-                <span className="text-sm text-gray-400">Sales</span>
-              </div>
-              <div className="absolute top-0 right-0 flex items-center">
-                <span className="text-xs bg-[#11f7b1]/10 text-[#11f7b1] px-2 py-0.5 rounded">+8.5%</span>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-[#845EF7]">$2.8K</span>
-                <span className="text-sm text-gray-400">Rentals</span>
-              </div>
-              <div className="absolute top-0 right-0 flex items-center">
-                <span className="text-xs bg-[#845EF7]/10 text-[#845EF7] px-2 py-0.5 rounded">+12.3%</span>
-              </div>
-            </div>
+          <div className="flex items-baseline gap-2">
+            <h3 className="text-sm text-gray-400">Market cap</h3>
+            <span className="text-xs text-gray-600">#633</span>
           </div>
+          <p className="text-2xl font-bold">1.85M</p>
+          <p className="text-sm text-[#11f7b1]">+1,557.3% 7D</p>
         </div>
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
           <h3 className="text-sm text-gray-400">Holders</h3>
