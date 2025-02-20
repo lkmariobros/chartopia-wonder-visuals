@@ -63,23 +63,24 @@ export default function ChartDemo() {
     <div className="w-full max-w-6xl mx-auto p-6 bg-[#121212] rounded-xl">
       <div className="grid grid-cols-4 gap-4 mb-8 text-white">
         <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <div className="flex items-baseline justify-between">
-            <div>
-              <h3 className="text-sm text-gray-400">Avg. Deal Size</h3>
-              <p className="text-2xl font-bold">$485K</p>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm text-[#11f7b1]">+12.3% </span>
-                <span className="text-xs text-gray-400">vs last month</span>
+          <h3 className="text-sm text-gray-400 mb-3">Average Deal Size</h3>
+          <div className="space-y-3">
+            <div className="relative">
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-[#11f7b1]">$520K</span>
+                <span className="text-sm text-gray-400">Sales</span>
+              </div>
+              <div className="absolute top-0 right-0 flex items-center">
+                <span className="text-xs bg-[#11f7b1]/10 text-[#11f7b1] px-2 py-0.5 rounded">+8.5%</span>
               </div>
             </div>
-            <div className="flex flex-col items-end">
-              <div className="flex gap-2 items-center">
-                <span className="text-xs text-gray-400">Sales</span>
-                <span className="text-sm font-semibold text-[#11f7b1]">$520K</span>
+            <div className="relative">
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-[#845EF7]">$2.8K</span>
+                <span className="text-sm text-gray-400">Rentals</span>
               </div>
-              <div className="flex gap-2 items-center mt-1">
-                <span className="text-xs text-gray-400">Rentals</span>
-                <span className="text-sm font-semibold text-[#845EF7]">$2.8K</span>
+              <div className="absolute top-0 right-0 flex items-center">
+                <span className="text-xs bg-[#845EF7]/10 text-[#845EF7] px-2 py-0.5 rounded">+12.3%</span>
               </div>
             </div>
           </div>
