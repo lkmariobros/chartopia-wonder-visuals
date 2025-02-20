@@ -90,91 +90,78 @@ export default function ChartDemo() {
         </div>
       </div>
 
-      <div className="mb-8">
-        <div className="h-[400px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={data}>
-              <defs>
-                <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#11f7b1" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#11f7b1" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorRentals" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#845EF7" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#845EF7" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis 
-                dataKey="date" 
-                stroke="#666"
-                tick={{ fill: '#666' }}
-              />
-              <YAxis 
-                yAxisId="left"
-                stroke="#666"
-                tick={{ fill: '#666' }}
-                domain={[0, (dataMax: number) => dataMax * 1.2]}
-              />
-              <YAxis 
-                yAxisId="right"
-                orientation="right"
-                stroke="#666"
-                tick={{ fill: '#666' }}
-                domain={[0, 0.5]}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar
-                dataKey="sales"
-                fill="url(#colorSales)"
-                yAxisId="left"
-                barSize={20}
-                strokeWidth={2}
-                stroke="#11f7b1"
-              />
-              <Bar
-                dataKey="rentals"
-                fill="url(#colorRentals)"
-                yAxisId="left"
-                barSize={20}
-                strokeWidth={2}
-                stroke="#845EF7"
-              />
-              <Line
-                type="monotone"
-                dataKey="price"
-                stroke="#11f7b1"
-                strokeWidth={2}
-                dot={{ fill: '#11f7b1', r: 4 }}
-                yAxisId="left"
-                onMouseEnter={(_, index) => {
-                  setHoveredPrice(data[index].price);
-                }}
-                onMouseLeave={() => setHoveredPrice(null)}
-              />
-              <Line
-                type="monotone"
-                dataKey="mindshare"
-                stroke="#666"
-                strokeWidth={2}
-                dot={{ fill: '#666', r: 4 }}
-                yAxisId="right"
-              />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 text-white">
-        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <h3 className="text-sm text-gray-400">Engagement (Avg.)</h3>
-          <p className="text-2xl font-bold">22.88</p>
-          <p className="text-sm text-[#11f7b1]">+83.5% 7D</p>
-        </div>
-        <div className="bg-[#1a1a1a] p-4 rounded-lg border border-gray-800">
-          <h3 className="text-sm text-gray-400">Impressions (Avg.)</h3>
-          <p className="text-2xl font-bold">1.34K</p>
-          <p className="text-sm text-[#11f7b1]">+79% 7D</p>
-        </div>
+      <div className="h-[400px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart data={data}>
+            <defs>
+              <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#11f7b1" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#11f7b1" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorRentals" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#845EF7" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#845EF7" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis 
+              dataKey="date" 
+              stroke="#666"
+              tick={{ fill: '#666' }}
+            />
+            <YAxis 
+              yAxisId="left"
+              stroke="#666"
+              tick={{ fill: '#666' }}
+              domain={[0, (dataMax: number) => dataMax * 1.2]}
+            />
+            <YAxis 
+              yAxisId="right"
+              orientation="right"
+              stroke="#666"
+              tick={{ fill: '#666' }}
+              domain={[0, 0.5]}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Bar
+              dataKey="sales"
+              fill="url(#colorSales)"
+              yAxisId="left"
+              barSize={20}
+              strokeWidth={2}
+              stroke="#11f7b1"
+            />
+            <Bar
+              dataKey="rentals"
+              fill="url(#colorRentals)"
+              yAxisId="left"
+              barSize={20}
+              strokeWidth={2}
+              stroke="#845EF7"
+            />
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke="#11f7b1"
+              strokeWidth={2}
+              dot={{ fill: '#11f7b1', r: 4 }}
+              yAxisId="left"
+              onMouseEnter={(data) => {
+                if (data && typeof data === 'number') {
+                  setHoveredPrice(data);
+                }
+              }}
+              onMouseLeave={() => setHoveredPrice(null)}
+            />
+            <Line
+              type="monotone"
+              dataKey="mindshare"
+              stroke="#666"
+              strokeWidth={2}
+              dot={{ fill: '#666', r: 4 }}
+              yAxisId="right"
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
