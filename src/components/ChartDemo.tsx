@@ -87,39 +87,54 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
 
   return (
     <div className="container mx-auto p-6">
-      <div className={`grid grid-cols-3 gap-6 mb-6 ${textColor}`}>
-        {cards.map((card, index) => (
-          <MetricCard
-            key={index}
-            {...card}
-            isPinned={pinnedCards.includes(index)}
-            onPin={() => togglePin(index)}
-            isDarkMode={isDarkMode}
-          />
-        ))}
-      </div>
+      <div className="grid grid-cols-4 gap-6">
+        {/* Left section - 3 columns */}
+        <div className="col-span-3">
+          {/* Container for metric cards */}
+          <div className={`${bgColor} rounded-xl border ${borderColor} p-6 mb-6`}>
+            <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Key Metrics</h2>
+            <div className="grid grid-cols-3 gap-6">
+              {cards.map((card, index) => (
+                <div key={index} className={`${bgColor} rounded-lg border ${borderColor} relative`}>
+                  <div className="absolute -top-3 left-4 px-2 text-xs font-medium bg-[#11f7b1] text-black rounded">
+                    Section {index + 1}
+                  </div>
+                  <MetricCard
+                    {...card}
+                    isPinned={pinnedCards.includes(index)}
+                    onPin={() => togglePin(index)}
+                    isDarkMode={isDarkMode}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
 
-      <div className={`grid grid-cols-7 gap-6 ${textColor}`}>
-        <div className={`col-span-5 ${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
-          <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
-          <div className="h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data}>
-                <Area
-                  type="monotone"
-                  dataKey="mindshare"
-                  stroke="#11f7b1"
-                  fill="#11f7b120"
-                  strokeWidth={2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+          {/* Chart section */}
+          <div className={`${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
+            <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Performance Overview</h2>
+            <div className="h-[400px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={data}>
+                  <Area
+                    type="monotone"
+                    dataKey="mindshare"
+                    stroke="#11f7b1"
+                    fill="#11f7b120"
+                    strokeWidth={2}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
 
-        <div className={`col-span-2 ${bgColor} rounded-xl border ${borderColor} p-6 overflow-auto`}>
-          <h2 className="text-lg font-semibold mb-4">Recent Events</h2>
-          <RecentEvents events={recentEvents} isDarkMode={isDarkMode} />
+        {/* Right section - 1 column */}
+        <div className="col-span-1">
+          <div className={`${bgColor} rounded-xl border ${borderColor} p-6 h-full`}>
+            <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Recent Events</h2>
+            <RecentEvents events={recentEvents} isDarkMode={isDarkMode} />
+          </div>
         </div>
       </div>
     </div>
