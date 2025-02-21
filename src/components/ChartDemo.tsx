@@ -18,6 +18,21 @@ const data = [
   { date: 'Dec 2024', sales: 4, rentals: 4 }
 ];
 
+const commissionData = [
+  { month: 'Jan', actual: 45000, target: 40000 },
+  { month: 'Feb', actual: 52000, target: 40000 },
+  { month: 'Mar', actual: 38000, target: 40000 },
+  { month: 'Apr', actual: 65000, target: 45000 },
+  { month: 'May', actual: 48000, target: 45000 },
+  { month: 'Jun', actual: 55000, target: 45000 },
+  { month: 'Jul', actual: 72000, target: 50000 },
+  { month: 'Aug', actual: 44000, target: 50000 },
+  { month: 'Sep', actual: 68000, target: 50000 },
+  { month: 'Oct', actual: 51000, target: 55000 },
+  { month: 'Nov', actual: 49000, target: 55000 },
+  { month: 'Dec', actual: 58000, target: 55000 }
+];
+
 const cards = [
   {
     title: "Average Deal Size",
@@ -69,21 +84,6 @@ const recentEvents = [
     timestamp: "1d",
     avatar: "/avatar-kim.jpg"
   }
-];
-
-const commissionData = [
-  { month: 'Jan', actual: 45000, target: 40000 },
-  { month: 'Feb', actual: 52000, target: 40000 },
-  { month: 'Mar', actual: 38000, target: 40000 },
-  { month: 'Apr', actual: 65000, target: 45000 },
-  { month: 'May', actual: 48000, target: 45000 },
-  { month: 'Jun', actual: 55000, target: 45000 },
-  { month: 'Jul', actual: 72000, target: 50000 },
-  { month: 'Aug', actual: 44000, target: 50000 },
-  { month: 'Sep', actual: 68000, target: 50000 },
-  { month: 'Oct', actual: 51000, target: 55000 },
-  { month: 'Nov', actual: 49000, target: 55000 },
-  { month: 'Dec', actual: 58000, target: 55000 }
 ];
 
 interface ChartDemoProps {
@@ -145,121 +145,127 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
             </div>
           </div>
 
-          <div className={`col-span-2 ${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
-            <div className="flex items-center justify-between mb-6">
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
+            <div className="space-y-12">
               <div>
-                <h2 className={`text-xl font-semibold ${textColor}`}>Monthly Performance</h2>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Properties Sold and Rented</p>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className={`text-xl font-semibold ${textColor}`}>Monthly Performance</h2>
+                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Properties Sold and Rented</p>
+                  </div>
+                  <div className="text-sm font-medium">
+                    <span className="inline-flex items-center mr-4">
+                      <span className="w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
+                      <span className={textColor}>Sales</span>
+                    </span>
+                    <span className="inline-flex items-center">
+                      <span className="w-3 h-3 rounded-full bg-emerald-400 mr-2"></span>
+                      <span className={textColor}>Rentals</span>
+                    </span>
+                  </div>
+                </div>
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={data}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
+                      <XAxis 
+                        dataKey="date" 
+                        stroke={labelColor}
+                        tickLine={false}
+                        axisLine={{ stroke: gridColor }}
+                      />
+                      <YAxis 
+                        stroke={labelColor}
+                        tickLine={false}
+                        axisLine={{ stroke: gridColor }}
+                        label={{ 
+                          value: 'Number of Properties', 
+                          angle: -90, 
+                          position: 'insideLeft',
+                          style: { fill: labelColor }
+                        }}
+                      />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="sales" stackId="a" fill="#60a5fa" />
+                      <Bar dataKey="rentals" stackId="a" fill="#34d399" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
-              <div className="text-sm font-medium">
-                <span className="inline-flex items-center mr-4">
-                  <span className="w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
-                  <span className={textColor}>Sales</span>
-                </span>
-                <span className="inline-flex items-center">
-                  <span className="w-3 h-3 rounded-full bg-emerald-400 mr-2"></span>
-                  <span className={textColor}>Rentals</span>
-                </span>
+
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className={`text-xl font-semibold ${textColor}`}>Commission Performance</h2>
+                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Actual vs Target ($)</p>
+                  </div>
+                  <div className="text-sm font-medium">
+                    <span className="inline-flex items-center mr-4">
+                      <span className="w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
+                      <span className={textColor}>Actual Commission</span>
+                    </span>
+                    <span className="inline-flex items-center">
+                      <span className="w-3 h-3 rounded-full bg-gray-400 mr-2"></span>
+                      <span className={textColor}>Target</span>
+                    </span>
+                  </div>
+                </div>
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={commissionData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
+                      <XAxis 
+                        dataKey="month" 
+                        stroke={labelColor}
+                        tickLine={false}
+                        axisLine={{ stroke: gridColor }}
+                      />
+                      <YAxis 
+                        stroke={labelColor}
+                        tickLine={false}
+                        axisLine={{ stroke: gridColor }}
+                        tickFormatter={(value) => `$${value/1000}k`}
+                        label={{ 
+                          value: 'Commission Amount ($)', 
+                          angle: -90, 
+                          position: 'insideLeft',
+                          style: { fill: labelColor }
+                        }}
+                      />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: isDarkMode ? '#1f1f1f' : '#fff', borderColor: gridColor }}
+                        formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                        labelStyle={{ color: isDarkMode ? '#fff' : '#000' }}
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="actual" 
+                        name="Actual Commission"
+                        stroke="#c084fc" 
+                        strokeWidth={2}
+                        dot={{ fill: '#c084fc' }}
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="target" 
+                        name="Target"
+                        stroke="#9ca3af" 
+                        strokeWidth={2}
+                        strokeDasharray="5 5"
+                        dot={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
-            </div>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
-                  <XAxis 
-                    dataKey="date" 
-                    stroke={labelColor}
-                    tickLine={false}
-                    axisLine={{ stroke: gridColor }}
-                  />
-                  <YAxis 
-                    stroke={labelColor}
-                    tickLine={false}
-                    axisLine={{ stroke: gridColor }}
-                    label={{ 
-                      value: 'Number of Properties', 
-                      angle: -90, 
-                      position: 'insideLeft',
-                      style: { fill: labelColor }
-                    }}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="sales" stackId="a" fill="#60a5fa" />
-                  <Bar dataKey="rentals" stackId="a" fill="#34d399" />
-                </BarChart>
-              </ResponsiveContainer>
             </div>
           </div>
+        </div>
 
-          <div className={`col-span-2 ${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
+        <div className="col-span-1">
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg h-full`}>
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
             <RecentEvents events={recentEvents} isDarkMode={isDarkMode} />
-          </div>
-
-          <div className={`col-span-4 ${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className={`text-xl font-semibold ${textColor}`}>Commission Performance</h2>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Actual vs Target ($)</p>
-              </div>
-              <div className="text-sm font-medium">
-                <span className="inline-flex items-center mr-4">
-                  <span className="w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
-                  <span className={textColor}>Actual Commission</span>
-                </span>
-                <span className="inline-flex items-center">
-                  <span className="w-3 h-3 rounded-full bg-gray-400 mr-2"></span>
-                  <span className={textColor}>Target</span>
-                </span>
-              </div>
-            </div>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={commissionData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
-                  <XAxis 
-                    dataKey="month" 
-                    stroke={labelColor}
-                    tickLine={false}
-                    axisLine={{ stroke: gridColor }}
-                  />
-                  <YAxis 
-                    stroke={labelColor}
-                    tickLine={false}
-                    axisLine={{ stroke: gridColor }}
-                    tickFormatter={(value) => `$${value/1000}k`}
-                    label={{ 
-                      value: 'Commission Amount ($)', 
-                      angle: -90, 
-                      position: 'insideLeft',
-                      style: { fill: labelColor }
-                    }}
-                  />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: isDarkMode ? '#1f1f1f' : '#fff', borderColor: gridColor }}
-                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
-                    labelStyle={{ color: isDarkMode ? '#fff' : '#000' }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="actual" 
-                    name="Actual Commission"
-                    stroke="#c084fc" 
-                    strokeWidth={2}
-                    dot={{ fill: '#c084fc' }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="target" 
-                    name="Target"
-                    stroke="#9ca3af" 
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                    dot={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
           </div>
         </div>
       </div>
