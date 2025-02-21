@@ -1,7 +1,9 @@
+
 import { useState } from 'react';
 import { ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Line, LineChart } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
 import { RecentEvents } from './dashboard/RecentEvents';
+import { Switch } from './ui/switch';
 
 const data = [
   { date: 'Jan 2024', sales: 3, rentals: 2 },
@@ -92,6 +94,7 @@ interface ChartDemoProps {
 
 export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
   const [pinnedCards, setPinnedCards] = useState<number[]>([]);
+  const [showSalesOnly, setShowSalesOnly] = useState(false);
   const bgColor = isDarkMode ? 'bg-[#121212]' : 'bg-white';
   const borderColor = isDarkMode ? 'border-gray-800' : 'border-gray-200';
   const textColor = isDarkMode ? 'text-white' : 'text-gray-900';
@@ -130,7 +133,19 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       <div className="grid grid-cols-4 gap-8">
         <div className="col-span-3 space-y-8">
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mb-8`}>
-            <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Key Metrics</h2>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className={`text-xl font-semibold ${textColor}`}>Key Metrics</h2>
+              <div className="flex items-center gap-2">
+                <label htmlFor="sales-toggle" className={`text-sm ${textColor}`}>
+                  Show Sales Only
+                </label>
+                <Switch
+                  id="sales-toggle"
+                  checked={showSalesOnly}
+                  onCheckedChange={setShowSalesOnly}
+                />
+              </div>
+            </div>
             <div className="grid grid-cols-3 gap-8">
               {cards.map((card, index) => (
                 <div key={index}>
@@ -265,7 +280,10 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
         <div className="col-span-1">
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mt-[300px]`}>
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
-            <RecentEvents events={recentEvents} isDarkMode={isDarkMode} />
+            <RecentEvents 
+              events={showSalesOnly ? recentEvents.filter(event => event.action === 'SOLD') : recentEvents} 
+              isDarkMode={isDarkMode} 
+            />
           </div>
         </div>
       </div>
