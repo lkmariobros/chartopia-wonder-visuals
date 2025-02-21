@@ -134,6 +134,13 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mb-8`}>
             <div className="flex justify-between items-center mb-6">
               <h2 className={`text-xl font-semibold ${textColor}`}>Key Metrics</h2>
+              <Button 
+                size="sm"
+                className="font-medium"
+              >
+                <Plus className="mr-2 h-4 w-4" />
+                Add Sales Transaction
+              </Button>
             </div>
             <div className="grid grid-cols-3 gap-8">
               {cards.map((card, index) => (
@@ -267,15 +274,6 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
         </div>
 
         <div className="col-span-1">
-          <div className={`${bgColor} rounded-2xl border ${borderColor} p-6 shadow-lg`}>
-            <Button 
-              className="w-full py-6 text-lg font-medium"
-              size="lg"
-            >
-              <Plus className="mr-2 h-5 w-5" />
-              Add Sales Transaction
-            </Button>
-          </div>
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mt-8`}>
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
             <RecentEvents 
