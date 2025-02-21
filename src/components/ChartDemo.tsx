@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
@@ -95,10 +94,7 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Key Metrics</h2>
             <div className="grid grid-cols-3 gap-8">
               {cards.map((card, index) => (
-                <div key={index} className="relative pt-4">
-                  <div className="absolute -top-3 left-4 px-3 py-1 text-xs font-medium bg-[#11f7b1] text-black rounded-full shadow-md">
-                    Section {index + 1}
-                  </div>
+                <div key={index}>
                   <MetricCard
                     {...card}
                     isPinned={pinnedCards.includes(index)}
