@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
-import { PixelChart } from './dashboard/PixelChart';
 import { RecentEvents } from './dashboard/RecentEvents';
 
 const data = [
@@ -86,8 +85,6 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
     );
   };
 
-  const maxValue = Math.max(...data.map(d => Math.max(d.sales, d.rentals)));
-
   return (
     <div className="container mx-auto p-6">
       <div className={`grid grid-cols-3 gap-6 mb-6 ${textColor}`}>
@@ -105,21 +102,18 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
       <div className={`grid grid-cols-7 gap-6 ${textColor}`}>
         <div className={`col-span-5 ${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
           <h2 className="text-lg font-semibold mb-4">Performance Overview</h2>
-          <div className="h-[400px] relative">
-            <div className="absolute inset-0 z-10">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={data}>
-                  <Area
-                    type="monotone"
-                    dataKey="mindshare"
-                    stroke="#11f7b1"
-                    fill="#11f7b120"
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-            <PixelChart data={data} maxValue={maxValue} />
+          <div className="h-[400px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={data}>
+                <Area
+                  type="monotone"
+                  dataKey="mindshare"
+                  stroke="#11f7b1"
+                  fill="#11f7b120"
+                  strokeWidth={2}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
