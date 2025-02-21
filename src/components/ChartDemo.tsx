@@ -1,37 +1,8 @@
+
 import { useState } from 'react';
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, Line, LineChart } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
 import { RecentEvents } from './dashboard/RecentEvents';
-
-const subscriptionData = [
-  { month: 'Jan 2024', individual: 1200, team: 2300, enterprise: 1500 },
-  { month: 'Feb', individual: 1500, team: 3000, enterprise: 2000 },
-  { month: 'Mar', individual: 1300, team: 2800, enterprise: 1800 },
-  { month: 'Apr', individual: 2000, team: 3500, enterprise: 2500 },
-  { month: 'May', individual: 2200, team: 5000, enterprise: 4000 },
-  { month: 'Jun', individual: 2100, team: 4500, enterprise: 3500 },
-  { month: 'Jul', individual: 1800, team: 2000, enterprise: 1500 },
-  { month: 'Aug', individual: 2500, team: 3500, enterprise: 3000 },
-  { month: 'Sep', individual: 3000, team: 6000, enterprise: 4500 },
-  { month: 'Oct', individual: 2800, team: 4000, enterprise: 3000 },
-  { month: 'Nov', individual: 2000, team: 3000, enterprise: 2000 },
-  { month: 'Dec 2025', individual: 2500, team: 3500, enterprise: 2500 }
-];
-
-const subscriberData = [
-  { month: 'Jan', current: 20000, previous: 15000 },
-  { month: 'Feb', current: 25000, previous: 18000 },
-  { month: 'Mar', current: 30000, previous: 22000 },
-  { month: 'Apr', current: 35000, previous: 28000 },
-  { month: 'May', current: 45000, previous: 35000 },
-  { month: 'Jun', current: 50000, previous: 40000 },
-  { month: 'Jul', current: 48000, previous: 42000 },
-  { month: 'Aug', current: 52000, previous: 45000 },
-  { month: 'Sep', current: 60000, previous: 48000 },
-  { month: 'Oct', current: 58000, previous: 50000 },
-  { month: 'Nov', current: 62000, previous: 52000 },
-  { month: 'Dec', current: 65000, previous: 55000 }
-];
 
 const data = [
   { date: 'Feb 12', sales: 60, rentals: 40, mindshare: 0.12 },
@@ -116,6 +87,25 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
     );
   };
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-lg border ${borderColor}`}>
+          <p className={`text-sm font-medium ${textColor}`}>{label}</p>
+          <div className="space-y-1 mt-2">
+            <p className="text-blue-400 text-sm">
+              Sales: {payload[0].value} cases
+            </p>
+            <p className="text-emerald-400 text-sm">
+              Rentals: {payload[1].value} cases
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="grid grid-cols-4 gap-8">
@@ -141,38 +131,48 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           {/* Chart sections */}
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
             <div className="space-y-12">
-              {/* Subscriptions Chart */}
+              {/* Agent Performance Chart */}
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className={`text-xl font-semibold ${textColor}`}>Subscriptions Sold</h2>
+                  <div>
+                    <h2 className={`text-xl font-semibold ${textColor}`}>Agent Performance</h2>
+                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Sales and Rental Cases by Day</p>
+                  </div>
                   <div className="text-sm font-medium">
                     <span className="inline-flex items-center mr-4">
-                      <span className="w-3 h-3 rounded-full bg-red-400 mr-2"></span>
-                      <span className={textColor}>Individual</span>
-                    </span>
-                    <span className="inline-flex items-center mr-4">
-                      <span className="w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
-                      <span className={textColor}>Team</span>
+                      <span className="w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
+                      <span className={textColor}>Sales Cases</span>
                     </span>
                     <span className="inline-flex items-center">
                       <span className="w-3 h-3 rounded-full bg-emerald-400 mr-2"></span>
-                      <span className={textColor}>Enterprise</span>
+                      <span className={textColor}>Rental Cases</span>
                     </span>
                   </div>
                 </div>
                 <div className="h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={subscriptionData}>
+                    <BarChart data={data}>
                       <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
-                      <XAxis dataKey="month" stroke={labelColor} />
-                      <YAxis stroke={labelColor} />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: isDarkMode ? '#1f1f1f' : '#fff', borderColor: gridColor }}
-                        itemStyle={{ color: isDarkMode ? '#fff' : '#000' }}
+                      <XAxis 
+                        dataKey="date" 
+                        stroke={labelColor}
+                        tickLine={false}
+                        axisLine={{ stroke: gridColor }}
                       />
-                      <Bar dataKey="individual" stackId="a" fill="#f87171" />
-                      <Bar dataKey="team" stackId="a" fill="#c084fc" />
-                      <Bar dataKey="enterprise" stackId="a" fill="#34d399" />
+                      <YAxis 
+                        stroke={labelColor}
+                        tickLine={false}
+                        axisLine={{ stroke: gridColor }}
+                        label={{ 
+                          value: 'Number of Cases', 
+                          angle: -90, 
+                          position: 'insideLeft',
+                          style: { fill: labelColor }
+                        }}
+                      />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="sales" stackId="a" fill="#60a5fa" />
+                      <Bar dataKey="rentals" stackId="a" fill="#34d399" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
