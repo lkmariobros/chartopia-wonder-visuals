@@ -263,7 +263,7 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
         </div>
 
         <div className="col-span-1">
-          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mt-[300px]`}>
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
             <RecentEvents events={recentEvents} isDarkMode={isDarkMode} />
           </div>
