@@ -1,9 +1,10 @@
-
 import { useState } from 'react';
 import { ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Line, LineChart } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
 import { RecentEvents } from './dashboard/RecentEvents';
 import { Switch } from './ui/switch';
+import { Button } from './ui/button';
+import { Plus } from 'lucide-react';
 
 const data = [
   { date: 'Jan 2024', sales: 3, rentals: 2 },
@@ -278,7 +279,16 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
         </div>
 
         <div className="col-span-1">
-          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mt-[300px]`}>
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-6 shadow-lg`}>
+            <Button 
+              className="w-full py-6 text-lg font-medium"
+              size="lg"
+            >
+              <Plus className="mr-2 h-5 w-5" />
+              Add Sale
+            </Button>
+          </div>
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mt-8`}>
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
             <RecentEvents 
               events={showSalesOnly ? recentEvents.filter(event => event.action === 'SOLD') : recentEvents} 
