@@ -36,7 +36,7 @@ const cards = [
 const recentEvents = [
   {
     agent: "Sarah Chen",
-    action: "SOLD",
+    action: "SOLD" as const,
     property: "Oceanview Mansion",
     price: "$2.4M",
     timestamp: "2h",
@@ -44,7 +44,7 @@ const recentEvents = [
   },
   {
     agent: "Michael Rodriguez",
-    action: "RENT",
+    action: "RENT" as const,
     property: "Downtown Penthouse",
     price: "$8.5K/mo",
     timestamp: "4h",
@@ -52,7 +52,7 @@ const recentEvents = [
   },
   {
     agent: "Emily Wong",
-    action: "SOLD",
+    action: "SOLD" as const,
     property: "Suburban Villa",
     price: "$950K",
     timestamp: "1d",
@@ -60,7 +60,7 @@ const recentEvents = [
   },
   {
     agent: "David Kim",
-    action: "RENT",
+    action: "RENT" as const,
     property: "Lake House Estate",
     price: "$12K/mo",
     timestamp: "1d",
