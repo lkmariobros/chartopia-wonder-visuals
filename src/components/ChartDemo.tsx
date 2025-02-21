@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, Line, LineChart } from 'recharts';
+import { ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Line, LineChart } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
 import { RecentEvents } from './dashboard/RecentEvents';
 
@@ -16,36 +16,6 @@ const data = [
   { date: 'Oct 2024', sales: 4, rentals: 3 },
   { date: 'Nov 2024', sales: 3, rentals: 5 },
   { date: 'Dec 2024', sales: 4, rentals: 4 }
-];
-
-const subscriberData = [
-  { month: 'Jan', current: 20000, previous: 15000 },
-  { month: 'Feb', current: 25000, previous: 18000 },
-  { month: 'Mar', current: 30000, previous: 22000 },
-  { month: 'Apr', current: 35000, previous: 28000 },
-  { month: 'May', current: 45000, previous: 35000 },
-  { month: 'Jun', current: 50000, previous: 40000 },
-  { month: 'Jul', current: 48000, previous: 42000 },
-  { month: 'Aug', current: 52000, previous: 45000 },
-  { month: 'Sep', current: 60000, previous: 48000 },
-  { month: 'Oct', current: 58000, previous: 50000 },
-  { month: 'Nov', current: 62000, previous: 52000 },
-  { month: 'Dec', current: 65000, previous: 55000 }
-];
-
-const commissionData = [
-  { month: 'Jan', actual: 45000, target: 40000 },
-  { month: 'Feb', actual: 52000, target: 40000 },
-  { month: 'Mar', actual: 38000, target: 40000 },
-  { month: 'Apr', actual: 65000, target: 45000 },
-  { month: 'May', actual: 48000, target: 45000 },
-  { month: 'Jun', actual: 55000, target: 45000 },
-  { month: 'Jul', actual: 72000, target: 50000 },
-  { month: 'Aug', actual: 44000, target: 50000 },
-  { month: 'Sep', actual: 68000, target: 50000 },
-  { month: 'Oct', actual: 51000, target: 55000 },
-  { month: 'Nov', actual: 49000, target: 55000 },
-  { month: 'Dec', actual: 58000, target: 55000 }
 ];
 
 const cards = [
@@ -99,6 +69,21 @@ const recentEvents = [
     timestamp: "1d",
     avatar: "/avatar-kim.jpg"
   }
+];
+
+const commissionData = [
+  { month: 'Jan', actual: 45000, target: 40000 },
+  { month: 'Feb', actual: 52000, target: 40000 },
+  { month: 'Mar', actual: 38000, target: 40000 },
+  { month: 'Apr', actual: 65000, target: 45000 },
+  { month: 'May', actual: 48000, target: 45000 },
+  { month: 'Jun', actual: 55000, target: 45000 },
+  { month: 'Jul', actual: 72000, target: 50000 },
+  { month: 'Aug', actual: 44000, target: 50000 },
+  { month: 'Sep', actual: 68000, target: 50000 },
+  { month: 'Oct', actual: 51000, target: 55000 },
+  { month: 'Nov', actual: 49000, target: 55000 },
+  { month: 'Dec', actual: 58000, target: 55000 }
 ];
 
 interface ChartDemoProps {
@@ -208,50 +193,6 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
                       <Bar dataKey="sales" stackId="a" fill="#60a5fa" />
                       <Bar dataKey="rentals" stackId="a" fill="#34d399" />
                     </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Active Subscribers Chart */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className={`text-xl font-semibold ${textColor}`}>Active Subscribers</h2>
-                  <div className="text-sm font-medium">
-                    <span className="inline-flex items-center mr-4">
-                      <span className="w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
-                      <span className={textColor}>Current</span>
-                    </span>
-                    <span className="inline-flex items-center">
-                      <span className="w-3 h-3 rounded-full bg-gray-400 mr-2"></span>
-                      <span className={textColor}>Previous</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="h-[300px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={subscriberData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
-                      <XAxis dataKey="month" stroke={labelColor} />
-                      <YAxis stroke={labelColor} />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: isDarkMode ? '#1f1f1f' : '#fff', borderColor: gridColor }}
-                        itemStyle={{ color: isDarkMode ? '#fff' : '#000' }}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="current" 
-                        stroke="#c084fc" 
-                        strokeWidth={2}
-                        dot={{ fill: '#c084fc' }}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="previous" 
-                        stroke="#9ca3af" 
-                        strokeWidth={2}
-                        dot={{ fill: '#9ca3af' }}
-                      />
-                    </LineChart>
                   </ResponsiveContainer>
                 </div>
               </div>
