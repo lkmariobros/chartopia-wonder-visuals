@@ -14,6 +14,21 @@ const data = [
   { date: 'Feb 18', sales: 150, rentals: 100, mindshare: 0.20 }
 ];
 
+const subscriberData = [
+  { month: 'Jan', current: 20000, previous: 15000 },
+  { month: 'Feb', current: 25000, previous: 18000 },
+  { month: 'Mar', current: 30000, previous: 22000 },
+  { month: 'Apr', current: 35000, previous: 28000 },
+  { month: 'May', current: 45000, previous: 35000 },
+  { month: 'Jun', current: 50000, previous: 40000 },
+  { month: 'Jul', current: 48000, previous: 42000 },
+  { month: 'Aug', current: 52000, previous: 45000 },
+  { month: 'Sep', current: 60000, previous: 48000 },
+  { month: 'Oct', current: 58000, previous: 50000 },
+  { month: 'Nov', current: 62000, previous: 52000 },
+  { month: 'Dec', current: 65000, previous: 55000 }
+];
+
 const cards = [
   {
     title: "Average Deal Size",
