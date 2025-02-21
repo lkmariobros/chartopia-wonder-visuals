@@ -1,8 +1,11 @@
+
 import { useState } from 'react';
 import { ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Line, LineChart } from 'recharts';
 import { MetricCard } from './dashboard/MetricCard';
 import { RecentEvents } from './dashboard/RecentEvents';
 import { Switch } from './ui/switch';
+import { Button } from './ui/button';
+import { Plus } from 'lucide-react';
 
 const data = [
   { date: 'Jan 2024', sales: 3, rentals: 2 },
@@ -134,6 +137,16 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mb-8`}>
             <div className="flex justify-between items-center mb-6">
               <h2 className={`text-xl font-semibold ${textColor}`}>Key Metrics</h2>
+              <div className="flex items-center gap-2">
+                <label htmlFor="sales-toggle" className={`text-sm ${textColor}`}>
+                  Show Sales Only
+                </label>
+                <Switch
+                  id="sales-toggle"
+                  checked={showSalesOnly}
+                  onCheckedChange={setShowSalesOnly}
+                />
+              </div>
             </div>
             <div className="grid grid-cols-3 gap-8">
               {cards.map((card, index) => (
@@ -268,16 +281,13 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
 
         <div className="col-span-1">
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-6 shadow-lg`}>
-            <div className="flex items-center justify-between">
-              <label htmlFor="sales-toggle" className={`text-sm font-medium ${textColor}`}>
-                Show Sales Only
-              </label>
-              <Switch
-                id="sales-toggle"
-                checked={showSalesOnly}
-                onCheckedChange={setShowSalesOnly}
-              />
-            </div>
+            <Button 
+              className="w-full py-6 text-lg font-medium"
+              size="lg"
+            >
+              <Plus className="mr-2 h-5 w-5" />
+              Add Sales Transaction
+            </Button>
           </div>
           <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg mt-8`}>
             <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
