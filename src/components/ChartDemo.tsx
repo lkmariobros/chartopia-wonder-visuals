@@ -5,13 +5,18 @@ import { MetricCard } from './dashboard/MetricCard';
 import { RecentEvents } from './dashboard/RecentEvents';
 
 const data = [
-  { date: 'Feb 12', sales: 60, rentals: 40, mindshare: 0.12 },
-  { date: 'Feb 13', sales: 90, rentals: 60, mindshare: 0.15 },
-  { date: 'Feb 14', sales: 70, rentals: 50, mindshare: 0.11 },
-  { date: 'Feb 15', sales: 120, rentals: 80, mindshare: 0.18 },
-  { date: 'Feb 16', sales: 250, rentals: 150, mindshare: 0.25 },
-  { date: 'Feb 17', sales: 180, rentals: 120, mindshare: 0.22 },
-  { date: 'Feb 18', sales: 150, rentals: 100, mindshare: 0.20 }
+  { date: 'Jan 2024', sales: 3, rentals: 2 },
+  { date: 'Feb 2024', sales: 4, rentals: 3 },
+  { date: 'Mar 2024', sales: 2, rentals: 4 },
+  { date: 'Apr 2024', sales: 5, rentals: 2 },
+  { date: 'May 2024', sales: 3, rentals: 5 },
+  { date: 'Jun 2024', sales: 4, rentals: 3 },
+  { date: 'Jul 2024', sales: 6, rentals: 4 },
+  { date: 'Aug 2024', sales: 3, rentals: 3 },
+  { date: 'Sep 2024', sales: 5, rentals: 4 },
+  { date: 'Oct 2024', sales: 4, rentals: 3 },
+  { date: 'Nov 2024', sales: 3, rentals: 5 },
+  { date: 'Dec 2024', sales: 4, rentals: 4 }
 ];
 
 const subscriberData = [
@@ -109,10 +114,10 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           <p className={`text-sm font-medium ${textColor}`}>{label}</p>
           <div className="space-y-1 mt-2">
             <p className="text-blue-400 text-sm">
-              Sales: {payload[0].value} cases
+              Sales: {payload[0].value} properties
             </p>
             <p className="text-emerald-400 text-sm">
-              Rentals: {payload[1].value} cases
+              Rentals: {payload[1].value} properties
             </p>
           </div>
         </div>
@@ -150,17 +155,17 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className={`text-xl font-semibold ${textColor}`}>Agent Performance</h2>
-                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Sales and Rental Cases by Day</p>
+                    <h2 className={`text-xl font-semibold ${textColor}`}>Monthly Performance</h2>
+                    <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Properties Sold and Rented</p>
                   </div>
                   <div className="text-sm font-medium">
                     <span className="inline-flex items-center mr-4">
                       <span className="w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
-                      <span className={textColor}>Sales Cases</span>
+                      <span className={textColor}>Sales</span>
                     </span>
                     <span className="inline-flex items-center">
                       <span className="w-3 h-3 rounded-full bg-emerald-400 mr-2"></span>
-                      <span className={textColor}>Rental Cases</span>
+                      <span className={textColor}>Rentals</span>
                     </span>
                   </div>
                 </div>
@@ -179,7 +184,7 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
                         tickLine={false}
                         axisLine={{ stroke: gridColor }}
                         label={{ 
-                          value: 'Number of Cases', 
+                          value: 'Number of Properties', 
                           angle: -90, 
                           position: 'insideLeft',
                           style: { fill: labelColor }
