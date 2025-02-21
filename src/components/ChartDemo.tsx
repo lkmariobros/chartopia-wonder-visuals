@@ -86,17 +86,17 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="grid grid-cols-4 gap-6">
+    <div className="container mx-auto py-8 px-4">
+      <div className="grid grid-cols-4 gap-8">
         {/* Left section - 3 columns */}
-        <div className="col-span-3">
+        <div className="col-span-3 space-y-8">
           {/* Container for metric cards */}
-          <div className={`${bgColor} rounded-xl border ${borderColor} p-6 mb-6`}>
-            <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Key Metrics</h2>
-            <div className="grid grid-cols-3 gap-6">
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
+            <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Key Metrics</h2>
+            <div className="grid grid-cols-3 gap-8">
               {cards.map((card, index) => (
-                <div key={index} className={`${bgColor} rounded-lg border ${borderColor} relative`}>
-                  <div className="absolute -top-3 left-4 px-2 text-xs font-medium bg-[#11f7b1] text-black rounded">
+                <div key={index} className={`${bgColor} rounded-xl border ${borderColor} relative pt-4`}>
+                  <div className="absolute -top-3 left-4 px-3 py-1 text-xs font-medium bg-[#11f7b1] text-black rounded-full shadow-md">
                     Section {index + 1}
                   </div>
                   <MetricCard
@@ -111,8 +111,8 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
           </div>
 
           {/* Chart section */}
-          <div className={`${bgColor} rounded-xl border ${borderColor} p-6 h-[500px]`}>
-            <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Performance Overview</h2>
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg`}>
+            <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Performance Overview</h2>
             <div className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={data}>
@@ -131,8 +131,8 @@ export default function ChartDemo({ isDarkMode }: ChartDemoProps) {
 
         {/* Right section - 1 column */}
         <div className="col-span-1">
-          <div className={`${bgColor} rounded-xl border ${borderColor} p-6 h-full`}>
-            <h2 className={`text-lg font-semibold mb-4 ${textColor}`}>Recent Events</h2>
+          <div className={`${bgColor} rounded-2xl border ${borderColor} p-8 shadow-lg h-full`}>
+            <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>Recent Events</h2>
             <RecentEvents events={recentEvents} isDarkMode={isDarkMode} />
           </div>
         </div>
